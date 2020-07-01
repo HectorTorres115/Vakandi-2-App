@@ -14,9 +14,9 @@ export const requestPermission = async() => {
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          // console.log("You can use maps");
+          console.log("You can use maps");
         } else {
-          // console.log("Permiso denegado");
+          console.log("Permiso denegado");
         }
       } catch (err) {
         console.warn(err);

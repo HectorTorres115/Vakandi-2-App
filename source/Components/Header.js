@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 
-export const Header = ({navigation}) => {
+export const Header = () => {
     return (
         <View style = {styles.header}>
             <Text style = {styles.headerTitle}>Vakandi security app</Text>

@@ -3,8 +3,10 @@ import {styles} from '../Styles/Parte'
 import {Header} from '../Components/Header'
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 //Handle back functions
-import BackStore from '../Redux/Redux-back-store'
-import {set_back} from '../Redux/Redux-actions'
+// import BackStore from '../Redux/Redux-back-store'
+// import {set_back} from '../Redux/Redux-actions'
+import {handleAndroidBackButton} from '../Functions/backHandler'
+import {backAction} from '../Functions/Logout'
 //Import react apollo
 import {useMutation, useQuery} from 'react-apollo'
 import {GetMessagesQ, CreateMessageM} from '../Requests/Messages'
@@ -21,8 +23,10 @@ import {GetUser} from '../Functions/UserStorage'
 export const Parte = ({navigation}) => {
     //Lifecycle methods
     useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('MainClass'))
         return(() => {
-            BackStore.dispatch(set_back(true))
+            handleAndroidBackButton(backAction)
+            // BackStore.dispatch(set_back(true))
         })
     }, [])
     //State

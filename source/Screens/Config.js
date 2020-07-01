@@ -10,14 +10,18 @@ import {useMutation} from 'react-apollo'
 //Import user from async storage
 import {GetUser} from '../Functions/UserStorage'
 //Handle back functions
-import BackStore from '../Redux/Redux-back-store'
-import {set_back} from '../Redux/Redux-actions'
+// import BackStore from '../Redux/Redux-back-store'
+// import {set_back} from '../Redux/Redux-actions'
+import {handleAndroidBackButton} from '../Functions/backHandler'
+import {backAction} from '../Functions/Logout'
 
 export const Config = ({navigation}) => {
     //Lifecycle methods
     useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('MainClass'))
         return(() => {
-            BackStore.dispatch(set_back(true))
+            handleAndroidBackButton(backAction)
+            // BackStore.dispatch(set_back(true))
         })
     }, [])
     const [settoken] = useMutation(SetToken, {

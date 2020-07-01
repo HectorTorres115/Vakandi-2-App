@@ -11,14 +11,18 @@ FlatList, ImageBackground, TouchableOpacity, Picker
 import ElementStore from '../Redux/Redux-element-store'
 import {set_element} from '../Redux/Redux-actions'
 //Handle back functions
-import BackStore from '../Redux/Redux-back-store'
-import {set_back} from '../Redux/Redux-actions'
+// import BackStore from '../Redux/Redux-back-store'
+// import {set_back} from '../Redux/Redux-actions'
+import {handleAndroidBackButton} from '../Functions/backHandler'
+import {backAction} from '../Functions/Logout'
 
 export const Estado = ({navigation}) => {
     //Lifecycle methods
     useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('MainClass'))
         return(() => {
-            BackStore.dispatch(set_back(true))
+            // BackStore.dispatch(set_back(true))
+            handleAndroidBackButton(backAction)
         })
     }, [])
     //State

@@ -1,14 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {styles} from '../Styles/Register'
-import { View, Text, ImageBackground, Image, Alert, TextInput, ScrollView } from 'react-native'
+import { View, Text, ImageBackground, Image, Alert, TextInput, ScrollView, ActivityIndicator } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import {Header} from '../Components/Header'
 //React Apollo
 import {useMutation} from 'react-apollo'
 import {RegisterM} from '../Requests/Users'
 import {GetDeviceToken} from '../Functions/GetDeviceToken'
+//
+import {handleAndroidBackButton} from '../Functions/backHandler'
 
 export const Register = ({navigation}) => {
+    useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('LoginClass'))
+        return(() => {
+            handleAndroidBackButton(() => console.log('Do nothing'))
+        })
+    }, [])
+
     const [name, setName] = useState('');
     const [name2, setName2] = useState('');
     const [lastName, setLastName] = useState('');
@@ -17,7 +26,7 @@ export const Register = ({navigation}) => {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     
-    const [register] = useMutation(RegisterM, {
+    const [register, {loading}] = useMutation(RegisterM, {
         onCompleted: () => {
             Alert.alert('Tu peticion de registro ha sido enviada')
         },
@@ -26,6 +35,33 @@ export const Register = ({navigation}) => {
             Alert.alert('Error al conectar con el servidor')
         }
     })
+
+    function isLoading() {
+        if(loading) {
+            return <ActivityIndicator size = 'large' color = 'blue'/>
+        } else {
+            return(
+                <TouchableOpacity style ={styles.registerBtn} onPress = {async() => {
+                    const deviceToken = await GetDeviceToken();
+                    if(password == password2){
+                        if(name2 == '') {
+                            register({variables: {
+                                name, name2: 'NA', lastName, lastName2, username, password, deviceToken
+                            }})
+                        } else {
+                            register({variables: {
+                                name, name2, lastName, lastName2, username, password, deviceToken
+                            }})
+                        }
+                    } else {
+                        Alert.alert('Las contraseñas no coinciden')
+                    }
+                }}>
+                <Text style = {styles.textBtn}>Register</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
 
     return (
         <ImageBackground
@@ -101,24 +137,7 @@ export const Register = ({navigation}) => {
                     placeholder = 'Confirme su contraseña'/>
                 </View>
             </View>
-            <TouchableOpacity style ={styles.registerBtn} onPress = {async() => {
-                const deviceToken = await GetDeviceToken();
-                if(password == password2){
-                    if(name2 == '') {
-                        register({variables: {
-                            name, name2: 'NA', lastName, lastName2, username, password, deviceToken
-                        }})
-                    } else {
-                        register({variables: {
-                            name, name2, lastName, lastName2, username, password, deviceToken
-                        }})
-                    }
-                } else {
-                    Alert.alert('Las contraseñas no coinciden')
-                }
-            }}>
-            <Text style = {styles.textBtn}>Register</Text>
-            </TouchableOpacity>
+            {isLoading()}
             </ScrollView>
 
         </View>

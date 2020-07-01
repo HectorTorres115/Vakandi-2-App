@@ -14,7 +14,6 @@ import {set_back} from '../Redux/Redux-actions'
 import { useBackHandler } from '@react-native-community/hooks'
 import { backAction } from '../Functions/Logout'
 //Set token stuff
-import {GetDeviceToken} from "../Functions/GetDeviceToken";
 import {SetToken} from '../Requests/Users'
 import {useMutation} from 'react-apollo'
 
@@ -68,7 +67,7 @@ export const Main = ({navigation}) => {
                 BackStore.dispatch(set_back(false))
                 navigation.navigate('Locations')
             }}>
-                <Text style = {styles.textBtn}>LOCALIZACIONES</Text>
+                <Text style = {styles.textBtn}>ASIGNACIONES</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style = {styles.blueBtn} onPress = {() => {

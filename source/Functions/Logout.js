@@ -1,4 +1,4 @@
-import {BackHandler, Alert} from 'react-native'
+import {Alert} from 'react-native'
 import {DeleteLog} from '../Functions/Logged'
 import UserStore from '../Redux/Redux-user-store'
 import {set_user} from '../Redux/Redux-actions'
@@ -8,7 +8,6 @@ export const backAction = () => {
       { text: "Confirmar", onPress: async() => {
         UserStore.dispatch(set_user({}))
         await DeleteLog()
-        // BackHandler.exitApp()
       } },
       {
         text: "Cancelar",
@@ -18,15 +17,3 @@ export const backAction = () => {
     ]);
     return true;
 };
-
-export const handleAndroidBackButton = (callback) => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      backAction();
-      return true;
-    });
-};
-
-
-export const removeAndroidBackButtonHandler = () => {
-    BackHandler.removeEventListener('hardwareBackPress', () => {});
-}

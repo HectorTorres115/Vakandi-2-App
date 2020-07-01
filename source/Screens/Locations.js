@@ -5,14 +5,18 @@ import {styles} from '../Styles/Locations'
 import { View, Alert, FlatList, TextInput, ImageBackground, TouchableOpacity } from 'react-native'
 import {GetLocations, CreateLocation, UpdateLocation, DeleteLocation} from '../Requests/Locations'
 //Handle back functions
-import BackStore from '../Redux/Redux-back-store'
-import {set_back} from '../Redux/Redux-actions'
+// import BackStore from '../Redux/Redux-back-store'
+// import {set_back} from '../Redux/Redux-actions'
+import {handleAndroidBackButton} from '../Functions/backHandler'
+import {backAction} from '../Functions/Logout'
 
-export const Locations = () => {
+export const Locations = ({navigation}) => {
     //Lifecycle methods
     useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('MainClass'))
         return(() => {
-            BackStore.dispatch(set_back(true))
+            // BackStore.dispatch(set_back(true))
+            handleAndroidBackButton(backAction)
         })
     }, [])
     //State
@@ -122,7 +126,7 @@ export const Locations = () => {
             <View style = {styles.addContainer}>
                 <TextInput 
                 onChangeText = {(location) => setLocation(location)}
-                placeholder = 'Nueva localizacion'
+                placeholder = 'Nuevo punto'
                 style = {styles.input}/>
                 <TouchableOpacity style = {styles.sendBtn} onPress = {() => {
                     if(location !== '') {

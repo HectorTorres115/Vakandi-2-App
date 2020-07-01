@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {styles} from '../Styles/Login'
-import {requestPermission} from "../Functions/MapsPermission";
+// import {requestPermission} from "../Functions/MapsPermission";
 import {Header} from '../Components/Header'
-import { View, Text, ImageBackground, Alert, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, ImageBackground, Alert, TextInput, ActivityIndicator, PermissionsAndroid } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 //React Apollo
 import {useMutation} from 'react-apollo'
@@ -10,23 +10,34 @@ import {LoginM} from '../Requests/Users'
 //Import Redux
 import UserStore from '../Redux/Redux-user-store'
 import {set_user} from '../Redux/Redux-actions'
-//Remember account
-import {SetLog} from '../Functions/Logged'
-import {SetUser} from '../Functions/UserStorage'
 
 export const Login = ({navigation}) => {
-    requestPermission()
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    
+
+    useEffect(() => {
+        PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: "Permitir acceso a localizacion",
+              message:
+                "Esta app requiere permisos de localizacion para realizar los pedidos.",
+              buttonNeutral: "Ask Me Later",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK"
+            }
+          )
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err))
+    }, [])
+
     const [login, {loading, error}] = useMutation(LoginM, {
         onCompleted: async(data) => {   
             try {
                 UserStore.dispatch(set_user(data.Login))
                 if(UserStore.getState().username !== 'Error' && UserStore.getState().active !== false) {
-                    //Remember account setting token
-                    await SetLog(data.Login.active)
-                    await SetUser(data.Login)
+                    UserStore.dispatch(set_user(data.Login))
+                    navigation.navigate('Main')
                 } else {
                     Alert.alert('Usuario o contraseña incorrectos')
                 }

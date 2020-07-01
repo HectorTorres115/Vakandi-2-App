@@ -4,16 +4,20 @@ import { View, Text, Alert, ScrollView, TextInput, TouchableOpacity, Picker } fr
 import {styles} from '../Styles/Element'
 import {CreateElement} from '../Requests/Element'
 //Handle back functions
-import BackStore from '../Redux/Redux-back-store'
-import {set_back} from '../Redux/Redux-actions'
+// import BackStore from '../Redux/Redux-back-store'
+// import {set_back} from '../Redux/Redux-actions'
+import {handleAndroidBackButton} from '../Functions/backHandler'
+import {backAction} from '../Functions/Logout'
 //React apolllo queries
 import {GetLocations} from '../Requests/Locations'
 
-export const Element = () => {
+export const Element = ({navigation}) => {
     //Lifecycle methods
     useEffect(() => {
+        handleAndroidBackButton(() => navigation.navigate('MainClass'))
         return(() => {
-            BackStore.dispatch(set_back(true))
+            // BackStore.dispatch(set_back(true))
+            handleAndroidBackButton(backAction)
         })
     }, [])
     //Element state form
