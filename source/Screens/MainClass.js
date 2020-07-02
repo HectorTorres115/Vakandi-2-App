@@ -2,34 +2,22 @@ import React, { Component } from 'react'
 import {styles} from '../Styles/Main'
 import {Header} from '../Components/Header'
 import { View, Text, ImageBackground, TouchableOpacity} from 'react-native'
-//Import redux location store
-import Geolocation from '@react-native-community/geolocation'
-import LocationStore from '../Redux/Redux-location-store'
-import {set_location} from '../Redux/Redux-actions'
-//Import redux location store
-// import UserStore from '../Redux/Redux-user-store'
-// import BackStore from '../Redux/Redux-back-store'
-// import {set_back} from '../Redux/Redux-actions'
 //Handle back functions
 import {handleAndroidBackButton, removeAndroidBackButtonHandler} from '../Functions/backHandler'
 import {backAction} from '../Functions/Logout'
+//Location service import
+import Location from '../Functions/LocationService' 
 
-export class MainClass extends Component {
+export class MainClass extends Component {  
     constructor(props) {
         super(props);
         this.state = {data: null}
-        Geolocation.watchPosition((info) => {
-            LocationStore.dispatch(set_location({
-                longitude: info.coords.longitude,
-                latitude: info.coords.latitude
-            }))
-        }, (error) => console.log(error),
-        {enableHighAccuracy: true, distanceFilter: 0, useSignificantChanges: false, maximumAge: 0})
     }
 
     componentDidMount(){
         //Add handle back
         handleAndroidBackButton(backAction)
+        Location.startService();
     }
 
     componentWillUnmount() {
