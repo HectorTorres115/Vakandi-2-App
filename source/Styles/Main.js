@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         borderColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 20
+        margin: 10
     },
     configBtn: {
         height: '8%',
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         borderColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 20
+        margin: 10
     },
     redBtn: {
         height: '8%',

@@ -6,12 +6,12 @@ import { View, Text, ImageBackground, TouchableOpacity} from 'react-native'
 import {handleAndroidBackButton, removeAndroidBackButtonHandler} from '../Functions/backHandler'
 import {backAction} from '../Functions/Logout'
 //Location service import
-import Location from '../Functions/LocationService' 
+import Location from '../Functions/LocationService'
 
 export class MainClass extends Component {  
     constructor(props) {
         super(props);
-        this.state = {data: null}
+        this.state = {data: null, sendTest: null}
     }
 
     componentDidMount(){
@@ -37,6 +37,14 @@ export class MainClass extends Component {
                 this.props.navigation.navigate('Locations')
             }}>
                 <Text style = {styles.textBtn}>ASIGNACIONES</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.blueBtn} onPress = {() => {
+                // BackStore.dispatch(set_back(false))
+                removeAndroidBackButtonHandler()
+                this.props.navigation.navigate('Coordinacion')
+            }}>
+                <Text style = {styles.textBtn}>COORDINACION OPERATIVA</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style = {styles.blueBtn} onPress = {() => {

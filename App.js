@@ -16,6 +16,7 @@ import {ShowLocation} from './source/Screens/ShowLocation'
 import {Config} from './source/Screens/Config'
 import {Locations} from './source/Screens/Locations'
 import {Estado} from './source/Screens/Estado'
+import {Coordinacion} from './source/Screens/Coordinacion'
 import {Parte} from './source/Screens/Parte'
 import {Panic} from './source/Screens/Panic'
 import {Alert} from './source/Screens/Alert'
@@ -41,10 +42,10 @@ const AuthStackScreen = () => (
 const AdminStackScreen = () => (
   <AdminStack.Navigator headerMode = 'none'>
     
-    <AdminStack.Screen name = 'MainClass' component = {MainClass}/>
+    <AdminStack.Screen name = 'MainClass' component = {MainClass}/> 
     <AdminStack.Screen name = 'Login' component = {Login}/>
     <AdminStack.Screen name = 'Element' component = {Element}/> 
-    {/* <AdminStack.Screen name = 'Coordinacion' component = {Coordinacion}/>  */}
+    <AdminStack.Screen name = 'Coordinacion' component = {Coordinacion}/> 
     <AdminStack.Screen name = 'ShowLocation' component = {ShowLocation}/> 
     <AdminStack.Screen name = 'Config' component = {Config}/> 
     <AdminStack.Screen name = 'Locations' component = {Locations}/> 

@@ -11,13 +11,25 @@ import {Notification} from './source/Functions/ShowNotification';
 import Geolocation from '@react-native-community/geolocation';
 import LocationStore from './source/Redux/Redux-location-store';
 import {set_location} from './source/Redux/Redux-actions';
+//Import send location
+import {SendLocation} from './source/Functions/SendLocation';
 
 messaging().setBackgroundMessageHandler(async payload => {
+    if(payload.data.order) {
+        console.log('Order received')
+        const res = await SendLocation();
+        console.log(res)
+    }
     // console.log(payload.data)
     Notification(payload.data.title, payload.data.message)
 })
 
 messaging().onMessage(async payload => {
+    if(payload.data.order) {
+        console.log('Order received')
+        const res = await SendLocation();
+        console.log(res)
+    }
     // console.log(payload.data)
     Notification(payload.data.title, payload.data.message)
 })
